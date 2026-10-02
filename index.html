@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <title>Liam's Dino Adventure · Letters & Numbers</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <div class="app-shell">
@@ -38,7 +38,7 @@
   <div class="modal-backdrop hidden" id="gameModal" role="dialog" aria-modal="true" aria-labelledby="gameTitle"><div class="game-modal"><button class="close-button" id="closeGame" aria-label="Close game">×</button><div class="game-modal-top"><span class="game-modal-icon" id="modalIcon">🦕</span><div><div class="eyebrow" id="gameEyebrow">DINO LETTER QUEST</div><h2 id="gameTitle">Dino Letter Hunt</h2></div></div><div class="round-track" id="roundTrack"></div><div class="prompt-box"><button id="gameCharacter" class="game-character" aria-label="Tap the dinosaur to hear the question again">🦖</button><div class="prompt-label" id="promptLabel">CAN YOU FIND THIS LETTER?</div><div class="target" id="targetText">B</div><div class="prompt-speech" id="promptSpeech">Tap the matching letter!</div></div><div class="answer-grid" id="answerGrid"></div><div class="feedback" id="feedback" aria-live="polite"></div><div class="modal-footer"><span>⭐ <b id="modalStars">0</b></span><span>Tap a tile to hear it in English!</span></div></div></div>
   <div class="modal-backdrop hidden" id="rewardModal" role="dialog" aria-modal="true" aria-labelledby="rewardTitle"><div class="reward-card"><div class="confetti" aria-hidden="true">✦　✧　✦　✧　✦</div><div class="treasure">🥚</div><div class="eyebrow">QUEST COMPLETE</div><h2 id="rewardTitle">You did it, Liam!</h2><p id="rewardMessage">You found all the letters!</p><div class="reward-stars" id="rewardStars">⭐⭐⭐</div><button class="primary-button" id="rewardContinue">Keep exploring <span>→</span></button></div></div>
   <div class="modal-backdrop hidden" id="parentModal" role="dialog" aria-modal="true" aria-labelledby="parentTitle"><div class="parent-card"><button class="close-button" id="closeParent" aria-label="Close parent area">×</button><div class="eyebrow">GROWN-UPS</div><h2 id="parentTitle">Liam's progress</h2><p class="parent-intro">A little snapshot of the adventures so far.</p><div class="parent-stats"><div><span>⭐</span><strong id="parentStars">0</strong><small>Stars earned</small></div><div><span>🎮</span><strong id="parentRounds">0</strong><small>Quests played</small></div><div><span>🏅</span><strong id="parentLevel">1</strong><small>Current level</small></div></div><div class="parent-progress"><div class="parent-progress-heading"><strong>What's next</strong><span id="parentNext">Letters A–E</span></div><div class="progress-bar"><span id="progressFill"></span></div></div><p class="privacy-note">Progress stays on this iPad. No account needed.</p><button class="reset-button" id="resetProgress">Start fresh</button></div></div>
-  <script src="app.js"></script>
-  <script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});</script>
+  <script src="app.js?v=4"></script>
+  <script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js?v=4').catch(()=>{});</script>
 </body>
 </html>

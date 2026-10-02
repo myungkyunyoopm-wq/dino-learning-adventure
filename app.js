@@ -25,7 +25,7 @@
   }
   function updateVoiceButton() {
     const button = $('voiceToggle');
-    button.innerHTML = `${voiceOn ? '🔊' : '🔇'} <span>VOICE</span>`;
+    button.innerHTML = `${voiceOn ? '🔊' : '🔇'} <span>${voiceOn ? 'SOUND ON' : 'SOUND OFF'}</span>`;
     button.setAttribute('aria-label', `Turn English voice ${voiceOn ? 'off' : 'on'}`);
     button.setAttribute('aria-pressed', String(voiceOn));
     button.title = `English voice ${voiceOn ? 'on' : 'off'}`;
@@ -63,10 +63,10 @@
 
   function startGame(type) {
     const configs = {
-      letters: { title:'Dino Letter Hunt', icon:'🦕', eyebrow:'DINO LETTER QUEST', char:'🦖', label:'CAN YOU FIND THIS LETTER?', speech:'Find the letter!', rounds:5 },
-      numbers: { title:'Feed the T-Rex', icon:'🦖', eyebrow:'NUMBER FEEDING', char:'🦖', label:'WHAT NUMBER IS THE T-REX HUNGRY FOR?', speech:'Help your dinosaur count its snacks!', rounds:5 },
-      name: { title:"Liam's Name Game", icon:'🥚', eyebrow:'DINO NAME LAB', char:'🐣', label:'WHICH LETTER COMES NEXT?', speech:'Help hatch the letters in your name!', rounds:4 },
-      code: { title:'Fossil Code', icon:'🦴', eyebrow:'FOSSIL BONUS QUEST', char:'🦕', label:'CRACK THE FOSSIL CODE', speech:'Find the symbols to uncover a fossil!', rounds:3 }
+      letters: { title:'Find a letter', icon:'🦕', eyebrow:'LETTER GAME', char:'🦖', label:'TAP THE SAME LETTER!', speech:'Tap the same letter!', rounds:5 },
+      numbers: { title:'Feed T-Rex', icon:'🦖', eyebrow:'NUMBER GAME', char:'🦖', label:'T-REX IS HUNGRY FOR…', speech:'Tap the number I ask for!', rounds:5 },
+      name: { title:'Spell LIAM', icon:'🥚', eyebrow:'NAME GAME', char:'🐣', label:'SPELL LIAM!', speech:'Tap the next letter!', rounds:4 },
+      code: { title:'Find a fossil', icon:'🦴', eyebrow:'BONUS GAME', char:'🦕', label:'FIND THE SECRET CODE!', speech:'Tap the next symbol!', rounds:3 }
     };
     const cfg = configs[type];
     game = { type, cfg, round: 0, score: 0, sequence: type === 'name' ? 'LIAM'.split('') : type === 'code' ? Array.from({length:3}, () => Math.random() < .5 ? String(Math.ceil(Math.random()*5)) : alphabet[Math.floor(Math.random()*5)]) : [] };
@@ -76,7 +76,7 @@
   }
   function makeRound() {
     const {type,cfg,round,sequence}=game;
-    $('promptLabel').textContent=cfg.label; $('promptSpeech').textContent=type==='name' ? `Spell LIAM: ${sequence.slice(0,round).join(' · ') || 'tap the first letter'}` : type==='code' ? `Remember the code: ${sequence.join(' · ')}` : cfg.speech; $('feedback').textContent='';
+    $('promptLabel').textContent=cfg.label; $('promptSpeech').textContent=type==='name' ? `Tap the ${['first','next','next','last'][round]} letter!` : type==='code' ? `Code: ${sequence.join(' · ')} — tap ${targetWords(sequence[round])}` : cfg.speech; $('feedback').textContent='';
     let target, choices;
     if(type==='letters') { const end=Math.min(5+state.letterStage*5,26); const pool=alphabet.slice(0,end); target=pool[Math.floor(Math.random()*pool.length)]; choices=letterChoices(target,pool); }
     else if(type==='numbers') { const max=Math.min(5+state.numberStage*5,20); target=String(Math.ceil(Math.random()*max)); choices=numChoices(target,max); }
@@ -109,6 +109,7 @@
   function closeModal(id){$(id).classList.add('hidden');}
   document.querySelectorAll('.game-card').forEach(card=>card.addEventListener('click',()=>startGame(card.dataset.game)));
   $('startButton').addEventListener('click',()=>startGame('letters'));
+  $('gameCharacter').addEventListener('click',()=>speak(roundPrompt()));
   $('voiceToggle').addEventListener('click',()=>{voiceOn=!voiceOn;try{localStorage.setItem('liam-adventure-voice-v1',voiceOn?'on':'off')}catch{}updateVoiceButton();if(voiceOn)speak('English voice is on!');else if('speechSynthesis'in window)window.speechSynthesis.cancel();});
   $('closeGame').addEventListener('click',()=>closeModal('gameModal'));
   $('rewardContinue').addEventListener('click',()=>closeModal('rewardModal'));

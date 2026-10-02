@@ -40,10 +40,20 @@
     const letterEnd = Math.min(5 + state.letterStage * 5, 26);
     const numberEnd = Math.min(5 + state.numberStage * 5, 20);
     const level = 1 + Math.floor((state.letterStage + state.numberStage) / 2);
-    const next = state.letterStage === 0 ? 'Letters A–E' : state.numberStage === 0 ? 'Numbers 1–5' : state.letterStage < 5 ? `Letters ${alphabet[state.letterStage * 5]}–${alphabet[Math.min(state.letterStage * 5 + 4, 25)]}` : `Numbers ${numberEnd + 1}–${Math.min(numberEnd + 5, 20)}`;
+    const letterStart = state.letterStage * 5;
+    const numberStart = state.numberStage * 5 + 1;
+    const nextLetters = state.letterStage < 5 ? `Letters ${alphabet[letterStart]}–${alphabet[Math.min(letterStart + 4, 25)]}` : 'All letters found!';
+    const nextNumbers = state.numberStage < 4 ? `Numbers ${numberStart}–${Math.min(numberStart + 4, 20)}` : 'All numbers found!';
+    const next = state.letterStage === 5 && state.numberStage === 4 ? 'Pick any game!' : state.letterStage <= state.numberStage ? nextLetters : nextNumbers;
     $('starCount').textContent = state.stars;
     $('levelLabel').textContent = `Level ${level}`;
     $('journeyStars').textContent = `${state.stars} ${state.stars === 1 ? 'star' : 'stars'}`;
+    const hatchStages = [{ stars: 0, icon: '🥚' }, { stars: 5, icon: '🐣' }, { stars: 15, icon: '🦕' }, { stars: 30, icon: '🦖' }];
+    const hatch = [...hatchStages].reverse().find(stage => state.stars >= stage.stars) || hatchStages[0];
+    const nextHatch = hatchStages.find(stage => stage.stars > state.stars);
+    $('collectDino').textContent = hatch.icon;
+    $('rewardDino').textContent = hatch.icon;
+    $('hatchMessage').textContent = nextHatch ? `${nextHatch.stars - state.stars} more stars to hatch the next dino!` : 'You hatched every dino! Amazing!';
     $('nextStop').textContent = next;
     $('letterProgress').textContent = `A–${alphabet[letterEnd - 1]}`;
     $('numberProgress').textContent = `1–${numberEnd}`;
@@ -78,8 +88,8 @@
     const {type,cfg,round,sequence}=game;
     $('promptLabel').textContent=cfg.label; $('promptSpeech').textContent=type==='name' ? `Tap the ${['first','next','next','last'][round]} letter!` : type==='code' ? `Code: ${sequence.join(' · ')} — tap ${targetWords(sequence[round])}` : cfg.speech; $('feedback').textContent='';
     let target, choices;
-    if(type==='letters') { const end=Math.min(5+state.letterStage*5,26); const pool=alphabet.slice(0,end); target=pool[Math.floor(Math.random()*pool.length)]; choices=letterChoices(target,pool); }
-    else if(type==='numbers') { const max=Math.min(5+state.numberStage*5,20); target=String(Math.ceil(Math.random()*max)); choices=numChoices(target,max); }
+    if(type==='letters') { const start=state.letterStage<5?state.letterStage*5:0; const end=Math.min(5+state.letterStage*5,26); const unlocked=alphabet.slice(0,end); const fresh=state.letterStage<5?alphabet.slice(start,end):unlocked; target=fresh[Math.floor(Math.random()*fresh.length)]; choices=letterChoices(target,unlocked); }
+    else if(type==='numbers') { const start=state.numberStage<4?state.numberStage*5+1:1; const max=Math.min(5+state.numberStage*5,20); const fresh=Array.from({length:max-start+1},(_,i)=>String(start+i)); target=fresh[Math.floor(Math.random()*fresh.length)]; choices=numChoices(target,max); }
     else if(type==='name') { target=sequence[round]; choices=sampleChoices(target,[...'LIAM',...alphabet.slice(0,5)]); }
     else { target=sequence[round]; choices=sampleChoices(target,[...sequence,...(target.match(/[A-Z]/)?alphabet.slice(0,5):['1','2','3','4','5'])]); }
     game.target=target; $('targetText').textContent=target; $('roundTrack').innerHTML=Array.from({length:cfg.rounds},(_,i)=>`<span class="round-dot ${i<round?'done':i===round?'active':''}"></span>`).join('');
@@ -98,7 +108,7 @@
   function finishGame() {
     const type=game.type; state.stars+=game.score; state.rounds++;
     if(type==='letters') state.letterStage=Math.min(5,state.letterStage+1);
-    if(type==='numbers') state.numberStage=Math.min(3,state.numberStage+1);
+    if(type==='numbers') state.numberStage=Math.min(4,state.numberStage+1);
     if(type==='code') state.codePlayed=true;
     save(); $('gameModal').classList.add('hidden');
     const titles={letters:'Dino letter explorer!',numbers:'T-Rex snack master!',name:'You hatched LIAM!',code:'Fossil code cracked!'};

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#286441" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <title>Liam's Dino Adventure · Letters & Numbers</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Liam's Dino Adventure home"><span class="brand-mark">🦖</span><span>LIAM'S <b>DINO ADVENTURE</b></span></a>
+      <div class="top-stats"><button class="voice-button" id="voiceToggle" aria-label="Turn English voice off" title="English voice on">🔊 <span>VOICE</span></button><span class="stat-pill"><span>⭐</span><b id="starCount">0</b></span><span class="stat-pill level-pill"><span>🏅</span><b id="levelLabel">Level 1</b></span><button class="parent-button" id="parentButton" aria-label="Parent area">☰</button></div>
+    </header>
+    <main id="mainContent">
+      <section class="welcome section-wrap" id="homeView">
+        <div class="welcome-copy"><div class="eyebrow"><span class="sparkle">✦</span> THE LITTLE DINO LEARNING QUEST</div><h1>Ready for a<br/><span>roaring adventure?</span></h1><p>Explore a dinosaur island and discover letters and numbers together!</p><button class="primary-button" id="startButton">Let's play <span>→</span></button><div class="progress-note"><span>🧭</span> Your next stop: <strong id="nextStop">Letters A–E</strong></div></div>
+        <div class="hero-art" aria-label="A friendly dinosaur in a tropical jungle"><div class="sun-disc"></div><div class="hero-spark s1">✦</div><div class="hero-spark s2">✧</div><div class="hero-hill hill-back"></div><div class="hero-hill hill-front"></div><div class="palm palm-left">🌴</div><div class="palm palm-right">🌴</div><img class="dino-hero" src="dino.svg" alt="A friendly green dinosaur explorer"/><div class="roar-bubble">RAWR!</div><div class="float-card card-letter">A</div><div class="float-card card-number">3</div><div class="trail-dot d1"></div><div class="trail-dot d2"></div><div class="trail-dot d3"></div></div>
+      </section>
+      <section class="section-wrap games-section" id="gamesSection">
+        <div class="section-heading"><div><div class="eyebrow">EXPLORE THE ISLAND</div><h2>Choose a game</h2></div><div class="swipe-hint">Tap a card to play <span>↗</span></div></div>
+        <div class="game-grid">
+          <button class="game-card letters-card" data-game="letters"><span class="card-icon">🦕</span><span class="card-tag">LETTER SAFARI</span><strong>Dino Letter Hunt</strong><span class="card-description">Find the letter among the jungle ferns.</span><span class="card-bottom"><span class="mini-progress" id="letterProgress">A–E</span><span class="card-arrow">↗</span></span><span class="card-decoration">Aa</span></button>
+          <button class="game-card numbers-card" data-game="numbers"><span class="card-icon">🦖</span><span class="card-tag">NUMBER FEEDING</span><strong>Feed the T-Rex</strong><span class="card-description">Help your dino friend count its snacks.</span><span class="card-bottom"><span class="mini-progress" id="numberProgress">1–5</span><span class="card-arrow">↗</span></span><span class="card-decoration">123</span></button>
+          <button class="game-card name-card" data-game="name"><span class="card-icon">🥚</span><span class="card-tag">DINO NAME LAB</span><strong>Liam's Name Game</strong><span class="card-description">Hatch your name: L-I-A-M!</span><span class="card-bottom"><span class="mini-progress">4 letters</span><span class="card-arrow">↗</span></span><span class="card-decoration">LIAM</span></button>
+          <button class="game-card code-card" data-game="code"><span class="card-icon">🦴</span><span class="card-tag">FOSSIL BONUS</span><strong>Fossil Code</strong><span class="card-description">Crack the code to uncover a fossil.</span><span class="card-bottom"><span class="mini-progress" id="codeStatus">Ready to try</span><span class="card-arrow">↗</span></span><span class="card-decoration">•••</span></button>
+        </div>
+      </section>
+      <section class="section-wrap journey-section"><div class="journey-head"><div><div class="eyebrow">ISLAND PROGRESS</div><h2>Little steps, big discoveries</h2></div><div class="journey-score"><span>⭐</span><strong id="journeyStars">0 stars</strong></div></div><div class="journey-track"><div class="journey-line"></div><div class="journey-stop current"><span class="stop-icon">🥚</span><strong>First hatchlings</strong><small>A · B · C · D · E</small><i>START HERE</i></div><div class="journey-stop"><span class="stop-icon">🦕</span><strong>Dino counting</strong><small>1 · 2 · 3 · 4 · 5</small></div><div class="journey-stop"><span class="stop-icon">🌴</span><strong>Jungle trail</strong><small>Letters F–J · Numbers 6–10</small></div><div class="journey-stop locked"><span class="stop-icon">🦖</span><strong>Deep in the wild</strong><small>All the way to Z & 20</small></div></div></section>
+    </main>
+    <footer>Made for curious little explorers <span>✦</span></footer>
+  </div>
+  <div class="modal-backdrop hidden" id="gameModal" role="dialog" aria-modal="true" aria-labelledby="gameTitle"><div class="game-modal"><button class="close-button" id="closeGame" aria-label="Close game">×</button><div class="game-modal-top"><span class="game-modal-icon" id="modalIcon">🦕</span><div><div class="eyebrow" id="gameEyebrow">DINO LETTER QUEST</div><h2 id="gameTitle">Dino Letter Hunt</h2></div></div><div class="round-track" id="roundTrack"></div><div class="prompt-box"><div id="gameCharacter" class="game-character">🦖</div><div class="prompt-label" id="promptLabel">CAN YOU FIND THIS LETTER?</div><div class="target" id="targetText">B</div><div class="prompt-speech" id="promptSpeech">Tap the matching letter!</div></div><div class="answer-grid" id="answerGrid"></div><div class="feedback" id="feedback" aria-live="polite"></div><div class="modal-footer"><span>⭐ <b id="modalStars">0</b></span><span>Tap a tile to hear it in English!</span></div></div></div>
+  <div class="modal-backdrop hidden" id="rewardModal" role="dialog" aria-modal="true" aria-labelledby="rewardTitle"><div class="reward-card"><div class="confetti" aria-hidden="true">✦　✧　✦　✧　✦</div><div class="treasure">🥚</div><div class="eyebrow">QUEST COMPLETE</div><h2 id="rewardTitle">You did it, Liam!</h2><p id="rewardMessage">You found all the letters!</p><div class="reward-stars" id="rewardStars">⭐⭐⭐</div><button class="primary-button" id="rewardContinue">Keep exploring <span>→</span></button></div></div>
+  <div class="modal-backdrop hidden" id="parentModal" role="dialog" aria-modal="true" aria-labelledby="parentTitle"><div class="parent-card"><button class="close-button" id="closeParent" aria-label="Close parent area">×</button><div class="eyebrow">GROWN-UPS</div><h2 id="parentTitle">Liam's progress</h2><p class="parent-intro">A little snapshot of the adventures so far.</p><div class="parent-stats"><div><span>⭐</span><strong id="parentStars">0</strong><small>Stars earned</small></div><div><span>🎮</span><strong id="parentRounds">0</strong><small>Quests played</small></div><div><span>🏅</span><strong id="parentLevel">1</strong><small>Current level</small></div></div><div class="parent-progress"><div class="parent-progress-heading"><strong>What's next</strong><span id="parentNext">Letters A–E</span></div><div class="progress-bar"><span id="progressFill"></span></div></div><p class="privacy-note">Progress stays on this iPad. No account needed.</p><button class="reset-button" id="resetProgress">Start fresh</button></div></div>
+  <script src="app.js"></script>
+  <script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});</script>
+</body>
+</html>
